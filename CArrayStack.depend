@@ -1,0 +1,10 @@
+# depslib dependency file v1.0
+1189868556 source:d:\users\codeblocks\carraystack\main.c
+	<stdio.h>
+	<stdlib.h>
+
+1366182721 source:d:\users\codeblocks\carraystack\carraystack.c
+	"CArrayStack.h"
+
+1366183107 d:\users\codeblocks\carraystack\carraystack.h
+
