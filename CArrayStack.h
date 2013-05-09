@@ -1,8 +1,8 @@
 /* Project:     ArrayStack in C
  * File:        CArrayStack.h
  * Coder:       FunctionGHW
- * Version:     1.0
- * Last Change: 2013-4-19
+ * Version:     1.1
+ * Last Change: 2013-5-9
  * Description: Stack for C implemented using array.
  *              This is the header file of arraystack.
  *              Note: We assume that the user will not modify the stack directly.
@@ -14,8 +14,9 @@
 
 #include <stddef.h>
 
-#ifndef BYTE
-#define BYTE unsigned char
+#ifndef TYPEDEF_BYTE
+#define TYPEDEF_BYTE
+typedef unsigned char BYTE;
 #endif
 
 typedef struct
