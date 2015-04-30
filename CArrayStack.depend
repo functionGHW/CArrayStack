@@ -22,3 +22,17 @@
 1366353172 d:\users\github\carraystack\carraystack.h
 	<stddef.h>
 
+1430375354 source:d:\users\functionghw\documents\github\carraystack\main.c
+	<stdio.h>
+	<stdlib.h>
+	"CArrayStack.h"
+
+1430374208 d:\users\functionghw\documents\github\carraystack\carraystack.h
+	<stddef.h>
+
+1430375410 source:d:\users\functionghw\documents\github\carraystack\carraystack.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"CArrayStack.h"
+

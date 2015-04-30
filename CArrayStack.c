@@ -17,6 +17,37 @@
 /*You can change this size if necessary.*/
 #define ARRAY_STACK_MAX_SIZE (((size_t)-1))
 
+
+//Double the size of the stack;
+//Note: If the new size is great than ARRAY_STACK_MAX_SIZE,
+//      the function will use ARRAY_STACK_MAX_SIZE as new size;
+void __arystk_double_size(ArrayStack* stack)
+{
+    if (stack == NULL)
+    {
+        return;
+    }
+
+    size_t new_size = stack->size << 1;
+    if (new_size > ARRAY_STACK_MAX_SIZE)
+    {
+        new_size = ARRAY_STACK_MAX_SIZE;
+    }
+    size_t old_bytes = stack->elemt_size * stack->size;
+    size_t new_bytes = stack->elemt_size * new_size;
+    if ( (new_bytes >> 1) != old_bytes )
+    {
+        return;
+    }
+
+    BYTE* tmp = (BYTE*)realloc(stack->data, new_bytes);
+    if (tmp != NULL)
+    {
+        stack->data = tmp;
+        stack->size = new_size;
+    }
+}
+
 //Create a new array stack that has the specified size;
 //Note: the size can not great than ARRAY_STACK_MAX_SIZE,
 //      or this function will use ARRAY_STACK_MAX_SIZE as the size;
@@ -141,8 +172,9 @@ void arystk_push(ArrayStack* stack, const BYTE* elemt)
             return;
         }
     }
-    stack->top++;
+
     memcpy( (stack->data) + (stack->top) * stack->elemt_size, elemt, stack->elemt_size);
+    stack->top++;
 }
 
 //Get the top element of the stack;
@@ -225,32 +257,3 @@ void arystk_dispose(ArrayStack* stack)
     }
 }
 
-//Double the size of the stack;
-//Note: If the new size is great than ARRAY_STACK_MAX_SIZE,
-//      the function will use ARRAY_STACK_MAX_SIZE as new size;
-void __arystk_double_size(ArrayStack* stack)
-{
-    if (stack == NULL)
-    {
-        return;
-    }
-
-    size_t new_size = stack->size << 1;
-    if (new_size > ARRAY_STACK_MAX_SIZE)
-    {
-        new_size = ARRAY_STACK_MAX_SIZE;
-    }
-    size_t old_bytes = stack->elemt_size * stack->size;
-    size_t new_bytes = stack->elemt_size * new_size;
-    if ( (new_bytes >> 1) != old_bytes )
-    {
-        return;
-    }
-
-    BYTE* tmp = (BYTE*)realloc(stack->data, new_bytes);
-    if (tmp != NULL)
-    {
-        stack->data = tmp;
-        stack->size = new_size;
-    }
-}
