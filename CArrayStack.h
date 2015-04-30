@@ -1,8 +1,8 @@
 /* Project:     ArrayStack in C
  * File:        CArrayStack.h
  * Coder:       FunctionGHW
- * Version:     1.1
- * Last Change: 2013-5-9
+ * Version:     1.2
+ * Last Change: 2015-4-30
  * Description: Stack for C implemented using array.
  *              This is the header file of arraystack.
  *              Note: We assume that the user will not modify the stack directly.
@@ -64,7 +64,7 @@ void arystk_empty(ArrayStack* stack);
 void arystk_dispose(ArrayStack* stack);
 
 //Double the size of the stack;
-void arystk_double_size(ArrayStack* stack);
+//void arystk_double_size(ArrayStack* stack);
 
 #endif
 // _CARRAYSTACK_E1AFBBBE_7627_4C18_8F56_72348535ED6D

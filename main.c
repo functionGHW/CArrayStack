@@ -32,7 +32,7 @@ int main()
     //printf("%d\n", sizeof(BYTE));
     int* tmp;
     int arr[] = {92, 93, 65, 66, 4, 5, 6, 7, 8, 9};
-    ArrayStack* theStack = new_arystk(4, sizeof(arr[0]));
+    ArrayStack* theStack = new_arystk(1, sizeof(arr[0]));
     if (theStack == NULL)
     {
         printf("stack NULL!\n");
@@ -58,7 +58,7 @@ int main()
         tmp = NULL;
     }
 
-    arystk_double_size(theStack);
+
     chk_stack(theStack);
     arystk_push(theStack, (BYTE*)(arr + 4));
     arystk_push(theStack, (BYTE*)(arr + 5));
@@ -66,7 +66,7 @@ int main()
     arystk_push(theStack, (BYTE*)(arr + 1));
     arystk_push(theStack, (BYTE*)(arr + 2));
     arystk_push(theStack, (BYTE*)(arr + 3));
-    chk_stack(theStack);
+    //chk_stack(theStack);
 
     while ( !arystk_is_empty(theStack))
     {

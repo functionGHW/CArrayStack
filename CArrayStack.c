@@ -1,12 +1,12 @@
 /* Project:     ArrayStack in C
  * File:        CArrayStack.c
  * Coder:       FunctionGHW
- * Version:     1.0
- * Last Change: 2013-4-19
+ * Version:     1.2
+ * Last Change: 2015-4-30
  * Description: Stack for C implemented using array.
  *              This is an inmplementation of CArrayStack.h.
  *              Note:   In most cases, users must check arguments before them passed,
- *                      we don't do much about handle these mistakes.
+ *                      we don't do much about handling these mistakes.
  */
 
 #include <stdio.h>
@@ -14,12 +14,12 @@
 #include <string.h>
 #include "CArrayStack.h"
 
-/*You can change this size with your value, if it's necessary.*/
+/*You can change this size if necessary.*/
 #define ARRAY_STACK_MAX_SIZE (((size_t)-1))
 
 //Create a new array stack that has the specified size;
 //Note: the size can not great than ARRAY_STACK_MAX_SIZE,
-//      or the function will use ARRAY_STACK_MAX_SIZE as the size;
+//      or this function will use ARRAY_STACK_MAX_SIZE as the size;
 ArrayStack* new_arystk(size_t size, size_t elemt_size)
 {
     if(size == 0 || elemt_size == 0)
@@ -33,7 +33,7 @@ ArrayStack* new_arystk(size_t size, size_t elemt_size)
     }
     size_t bytes_num = elemt_size * size;
     if ( (bytes_num / elemt_size) != size )
-    {   //Arithmetic overflow;
+    {   // Arithmetic overflow;
         return NULL;
     }
     ArrayStack* newStack = (ArrayStack*)malloc(sizeof(ArrayStack));
@@ -127,13 +127,22 @@ inline int arystk_is_empty(const ArrayStack* stack)
 //Insert an element into the top of the stack;
 void arystk_push(ArrayStack* stack, const BYTE* elemt)
 {
-    if (arystk_is_full(stack) || elemt == NULL)
+    if (stack == NULL || elemt == NULL)
     {
         return;
     }
 
-    memcpy( (stack->data) + (stack->top) * stack->elemt_size, elemt, stack->elemt_size);
+    // if stack is full, try to extend the data array.
+    if (arystk_is_full(stack))
+    {
+        __arystk_double_size(stack);
+        if (arystk_is_full(stack))
+        {
+            return;
+        }
+    }
     stack->top++;
+    memcpy( (stack->data) + (stack->top) * stack->elemt_size, elemt, stack->elemt_size);
 }
 
 //Get the top element of the stack;
@@ -182,8 +191,8 @@ BYTE* arystk_peek_and_pop(ArrayStack* stack)
     BYTE* pCopy = (BYTE*)malloc(stack->elemt_size);
     if (pCopy != NULL)
     {
-        memcpy(pCopy, stack->data + (stack->top - 1) * stack->elemt_size, stack->elemt_size);
         stack->top--;
+        memcpy(pCopy, stack->data + (stack->top - 1) * stack->elemt_size, stack->elemt_size);
     }
     return pCopy;
 }
@@ -209,6 +218,9 @@ void arystk_dispose(ArrayStack* stack)
             free(stack->data);
             stack->data = NULL;
         }
+        stack->size = 0;
+        stack->top = 0;
+        stack->elemt_size = 0;
         free(stack);
     }
 }
@@ -216,7 +228,7 @@ void arystk_dispose(ArrayStack* stack)
 //Double the size of the stack;
 //Note: If the new size is great than ARRAY_STACK_MAX_SIZE,
 //      the function will use ARRAY_STACK_MAX_SIZE as new size;
-void arystk_double_size(ArrayStack* stack)
+void __arystk_double_size(ArrayStack* stack)
 {
     if (stack == NULL)
     {
